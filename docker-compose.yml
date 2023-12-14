@@ -32,8 +32,9 @@ services:
             - testes
 
     # mysql micro 01
-    db_microservicos:
+    db:
         image: mysql:5.7.22
+        platform: linux/amd64
         restart: unless-stopped
         environment: 
             MYSQL_DATABASE: ${DB_DATABASE}
@@ -43,7 +44,7 @@ services:
         volumes: 
             - ./.docker/mysql/dbdata:/var/lib/mysql
         ports: 
-            - 3308:3306
+            - 3310:3306
         networks: 
             - testes
 
