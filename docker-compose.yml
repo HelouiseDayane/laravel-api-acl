@@ -1,76 +1,57 @@
 version: "3.7"
+
 services:
-    # imagem micro 01
-    micro_01:
-        build: 
-            args: 
-                user: helouise
-                uid: 1000
-            context: ./
+    # image project
+    app:
+        build:
+            context: .
             dockerfile: Dockerfile
-        image: laravel-app
         restart: unless-stopped
         working_dir: /var/www/
         volumes:
             - ./:/var/www
-        depends_on: 
-            - redis_micro_01
-            - queue
-        networks: 
-            - testes
-    
+        depends_on:
+            - redis
+        networks:
+            - laravel
+
     # nginx
     nginx:
         image: nginx:alpine
         restart: unless-stopped
-        ports: 
-            - 8989:80
-        volumes: 
+        ports:
+            - "8889:80"
+        volumes:
             - ./:/var/www
             - ./docker/nginx/:/etc/nginx/conf.d/
-        networks: 
-            - testes
+        networks:
+            - laravel
 
-    # mysql micro 01
+    # db mysql
     db:
         image: mysql:5.7.22
         platform: linux/amd64
         restart: unless-stopped
-        environment: 
-            MYSQL_DATABASE: ${DB_DATABASE}
-            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-            MYSQL_PASSWORD: ${DB_PASSWORD}
-            MYSQL_USER: ${DB_USERNAME}
-        volumes: 
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE:-laravel}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+            MYSQL_PASSWORD: ${DB_PASSWORD:-userpass}
+            MYSQL_USER: ${DB_USERNAME:-username}
+        volumes:
             - ./.docker/mysql/dbdata:/var/lib/mysql
-        ports: 
-            - 3310:3306
-        networks: 
-            - testes
+        ports:
+            - "3388:3306"
+        networks:
+            - laravel
 
-    # queue micro 01
-    queue:
-        build: 
-            args: 
-                user: helouise
-                uid: 1000
-            context: ./
-            dockerfile: Dockerfile
-        restart: unless-stopped
-        command: "php artisan queue:work"
-        volumes: 
-            - ./:/var/www
-        depends_on: 
-            - redis_micro_01
-        networks: 
-            - testes
+    
 
-    #redis
-    redis_micro_01:
+    # redis
+    redis:
         image: redis:latest
-        networks: 
-            - testes
+        networks:
+            - laravel
 
-networks: 
-    testes:
+networks:
+    laravel:
         driver: bridge
