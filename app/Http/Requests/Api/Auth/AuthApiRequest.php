@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\Api\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UpdateUserRequest extends FormRequest
+class AuthApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,16 +22,9 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => [
-                'required',
-                'min:3',
-                'max:255',
-            ],
-            'password' => [
-                'nullable',
-                'min:6',
-                'max:20',
-            ],
+            'email' => 'required|email',
+            'password' => 'required',
+            'device_name' => 'required',
         ];
     }
 }
