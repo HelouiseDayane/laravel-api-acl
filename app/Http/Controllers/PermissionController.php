@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PermissionResource;
@@ -8,7 +8,7 @@ use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class PermissionUserController extends Controller
+class PermissionController extends Controller
 {
     public function __construct(private UserRepository $userRepository)
     { 

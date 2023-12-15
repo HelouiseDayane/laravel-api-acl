@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO\Users;
+namespace App\DTO\Permissions;
 
 class CreatePermissionDTO{
 
