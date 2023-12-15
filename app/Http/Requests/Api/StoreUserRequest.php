@@ -22,6 +22,7 @@ class StoreUserRequest extends FormRequest
      */
     public function rules(): array
     {
+        // na sequencia do DTO
         return [
             'name' => [
                 'required',

@@ -27,6 +27,7 @@ class UserRepository
 
     public function createNew(CreateUserDTO $dto): User
     {
+        //jogo meus dados num array para envia para CreateUserDTO
         $data = (array) $dto;
         $data['password'] = bcrypt($data['password']);
         return $this->user->create($data);

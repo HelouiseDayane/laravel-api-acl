@@ -36,7 +36,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        //passo um sprat (...) na função de DTO ora trazer todas as colunas descritas no DTO
+        //passo um sprat (...) na função de DTO pra trazer todas as colunas descritas no DTO
         $user = $this->userRepository->createNew(new CreateUserDTO(... $request->validated()));
         return new UserResource($user);
     }
